@@ -10,7 +10,7 @@ const app= express()
 app.use(express.json())
 app.use("/api/user",userRouter)
 
-mongoose.connect("mongodb+srv://techiesgateway:dMR7rINpRkyJVhS7@cluster0.mwhjzfb.mongodb.net/?retryWrites=true&w=majority").then(()=>{
+mongoose.connect("mongodb+srv://navinkey5:PMH4S6jVVtOTRGrh@cluster0.lus7jg4.mongodb.net/?retryWrites=true&w=majority").then(()=>{
     app.listen(5000,function(){
     console.log("db connected & Server is runnning");
 })

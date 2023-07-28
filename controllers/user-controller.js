@@ -6,7 +6,27 @@ const User = require("../model/User")
 
 // 1. login
 
-const userLogin=(req,res)=>{
+const userLogin=async (req,res)=>{
+
+    const {email,password}=req.body;
+    let existingUser;
+
+    try{
+
+        existingUser= await User.findOne({email})
+    }
+    catch(err){
+        console.log(err);
+        res.status(200).json({msg:"something went wrong!"})
+    }
+        
+        if(!existingUser){
+            res.status(200).json({msg:"User not found!"})
+        }
+        else{
+            
+
+        }
 
 
 }
@@ -14,7 +34,7 @@ const userLogin=(req,res)=>{
 // 2. Signup
 
 const userSignup= async (req,res) => {
-    const {name, number,email,password,college,course,sem}=req.body;
+    const {name, number,email,password}=req.body;
     let existingUser;
     try{
         existingUser= await User.findOne({email}) 
@@ -29,7 +49,7 @@ const userSignup= async (req,res) => {
         const hashedPassword= await bcrypt.hash(password,10)
 
         const user = new User({
-            name, number,email,password:hashedPassword,college,course,sem
+            name, number,email,password:hashedPassword
         })
 
 

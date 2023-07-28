@@ -24,25 +24,7 @@ const userSchema= new Schema({
         required:true,
         minlength:6
     
-    },
-    college:{
-        type:String,
-        required:true,
-        
-    
-    },
-    course:{
-        type:String,
-        required:true,
-       
-    
-    },
-    sem:{
-        type:Number,
-        required:true,
-      
-    
-    },
+    }
 })
 
 module.exports =mongoose.model("User",userSchema);
