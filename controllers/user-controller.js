@@ -3,17 +3,17 @@ const bcrypt= require("bcrypt")
 const jwt= require("jsonwebtoken")
 const { findOne } = require("../model/User")
 const User = require("../model/User")
-
+const SECRET="RCNSQUARE"
 // 1. login
 
 const userLogin=async (req,res)=>{
 
-    const {email,password}=req.body;
+    const {number,password}=req.body;
     let existingUser;
 
     try{
 
-        existingUser= await User.findOne({email})
+        existingUser= await User.findOne({number})
     }
     catch(err){
         console.log(err);
@@ -24,7 +24,13 @@ const userLogin=async (req,res)=>{
             res.status(200).json({msg:"User not found!"})
         }
         else{
-            
+            if(await bcrypt.compare(password,existingUser.password)){
+                const token= jwt.sign({number:existingUser.number},SECRET)
+                res.status(200).json({msg:"Signin Successfull",token:token})
+            }
+            else{
+                res.status(200).json({msg:"Incorrect Password!"})
+            }
 
         }
 
@@ -37,7 +43,7 @@ const userSignup= async (req,res) => {
     const {name, number,email,password}=req.body;
     let existingUser;
     try{
-        existingUser= await User.findOne({email}) 
+        existingUser= await User.findOne({number}) 
         if(existingUser){
             res.status(200).json({msg:"User already Exists!"})
         }
